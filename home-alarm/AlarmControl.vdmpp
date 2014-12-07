@@ -4,45 +4,39 @@ class AlarmControl
 				public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
 				public FireStatus = <IDLE> | <FIRE_ALARM>;
 				public WaterStatus = <IDLE> | <WATER_ALARM>;
+				public Status = InvasionStatus | FireStatus | WaterStatus;
+				/* public SensorName = Sensor`SensorName; */
 				public Password = seq of nat;
 							
         instance variables
-        		public sensors : set of Sensors;
+        		/*public sensors : set of Sensor;*/
         		public invasionStatus : InvasionStatus := <OFF>;
         		public fireStatus : FireStatus := <IDLE>;
         		public waterStatus : WaterStatus := <IDLE>;
-        		public timeStamp : nat;   
+        		public timeStamp : nat := 0;   
         		public password : Password := [];             
                 
         operations
-        		public AlarmControl : () ==> AlarmControl
-        		AlarmControl() ==
-        		return self;
+        		public AlarmControl: () ==> AlarmControl
+							AlarmControl() == 
+							return self;
         		
-        		public setPassword : set of nat ==> ()
+        		public setPassword : Password ==> ()
         		setPassword(code) ==
-        			password := code;		
-		
+        			password := code;	
+        		
+        		public turnOn : Password  ==> ()
+        		turnOn(pass) ==
+        				if pass = password then invasionStatus := <ON_IDLE>
+        		pre invasionStatus = <OFF>;
 		 
-                public Stack: nat ==> Stack
-                Stack(c) == (capacity := c; return self)
-                post contents = [] and capacity = c;
-                
-                public clear: () ==> ()
-                clear() == contents := [];
-                
-                public push: int ==> ()
-                push(x) == contents := [x] ^ contents
-                pre len contents < capacity
-                post contents = [x] ^ contents~;
-                
-                public pop: () ==> ()
-                pop() == contents := tl contents
-                pre contents <> []
-                post contents = tl contents~;
-                
-                public top: () ==> int
-                top() == return hd contents
-                pre contents <> []
-                post RESULT = hd contents;
+            public setPassword : Password * Password ==> ()
+            setPassword(newPass, oldPass) ==
+            		if oldPass = password then password := newPass;
+               
+             public desativateAlarm : Password ==> ()
+             desativateAlarm(pass) ==
+             		if pass = password then invasionStatus := <OFF>
+             pre invasionStatus in set {<INTRUSION>, <ALARM>}
+             
 end AlarmControl
