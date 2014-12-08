@@ -4,9 +4,9 @@ class AlarmControl
 				public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
 				public FireStatus = <IDLE> | <FIRE_ALARM>;
 				public WaterStatus = <IDLE> | <WATER_ALARM>;
-				public Status = InvasionStatus | FireStatus | WaterStatus;
 				/* public SensorName = Sensor`SensorName; */
 				public Password = seq of nat;
+				public Time = nat;
 							
         instance variables
         		/*public sensors : set of Sensor;*/
@@ -37,6 +37,28 @@ class AlarmControl
              public desativateAlarm : Password ==> ()
              desativateAlarm(pass) ==
              		if pass = password then invasionStatus := <OFF>
-             pre invasionStatus in set {<INTRUSION>, <ALARM>}
+             pre invasionStatus in set {<INTRUSION>, <ALARM>};
+             
+             public turnOff : Password ==> ()
+             turnOff(pass) ==
+             		if pass = password then invasionStatus := <OFF>
+             pre invasionStatus = <ON_IDLE>;
+             
+             public setTime : Time ==> ()
+             setTime(time) ==
+             		if time > timeStamp then timeStamp := time;
+             		
+             public receiveFireSignal : FireStatus ==> ()
+             receiveFireSignal(s) ==
+             fireStatus := s;
+             
+             public receiveWaterSignal : WaterStatus ==> ()
+             receiveWaterSignal(s) ==
+             waterStatus := s;
+             
+             public receiveInvasionSignal : InvasionStatus ==> ()
+             receiveInvasionSignal(s) ==
+             invasionStatus := s;
+             		
              
 end AlarmControl

@@ -1,0 +1,19 @@
+class WaterSensor is subclass of Sensor
+
+--
+-- Operations definition section
+--
+operations
+
+public WaterSensor: nat * Utils`Type * nat ==> WaterSensor
+	WaterSensor (ID, t, val) ==
+		(id := ID;
+		type := t;
+		value := val;
+		);
+
+public setValue: nat ==> ()
+	setValue(v) ==
+		value := v;
+
+end WaterSensor

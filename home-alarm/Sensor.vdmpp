@@ -1,0 +1,32 @@
+
+class Sensor
+
+
+instance variables
+
+protected id	: nat;
+protected type	: Utils`Type;
+protected value	: nat;
+
+--
+-- Operations definition section
+--
+operations
+
+public GetID: () ==> nat
+	GetID() ==
+		return id;
+
+public GetType: () ==> Utils`Type
+	GetType() ==
+		return type;
+
+public ReadValue: () ==> nat
+	ReadValue() ==
+		return value;
+
+public Step: () ==> ()
+	Step() ==
+		is subclass responsibility
+
+end Sensor

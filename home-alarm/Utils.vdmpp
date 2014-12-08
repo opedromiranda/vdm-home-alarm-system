@@ -1,0 +1,6 @@
+class Utils
+
+types
+public Type = <FIRESENSOR> | <HUMIDSENSOR> | <INVASIONSENSOR>;
+		
+end Utils

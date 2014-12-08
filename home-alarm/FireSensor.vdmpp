@@ -1,0 +1,19 @@
+class FireSensor is subclass of Sensor
+
+--
+-- Operations definition section
+--
+operations
+
+public FireSensor: nat * Utils`Type * nat ==> FireSensor
+	FireSensor (ID, t, val) ==
+		(id := ID;
+		type := t;
+		value := val;
+		);
+
+public setValue: nat ==> ()
+	setValue(v) ==
+		value := v;
+
+end FireSensor
