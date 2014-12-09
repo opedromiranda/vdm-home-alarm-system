@@ -1,32 +1,27 @@
 
 class Sensor
 
+types
+public Type = Utils`Type
 
 instance variables
 
-protected id	: nat;
-protected type	: Utils`Type;
-protected value	: nat;
+protected type	: Type;
+protected value : int;
+protected alarm : AlarmControl;
 
 --
 -- Operations definition section
 --
 operations
 
-public GetID: () ==> nat
-	GetID() ==
-		return id;
-
 public GetType: () ==> Utils`Type
 	GetType() ==
 		return type;
-
-public ReadValue: () ==> nat
-	ReadValue() ==
-		return value;
-
-public Step: () ==> ()
-	Step() ==
+		
+		
+public setValue: nat ==> ()
+	setValue(v) ==
 		is subclass responsibility
-
+		
 end Sensor

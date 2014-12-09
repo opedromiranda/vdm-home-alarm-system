@@ -1,4 +1,44 @@
 class Division
 
+types
+public SensorType = Sensor`Type
+
+instance variables
+
+protected name	: Utils`DivisionName;
+protected temperature	: int;
+protected humidity : nat;
+protected invasion : bool;
+public sensors: map SensorType to Sensor := { |-> };
+
+
+--
+-- Operations definition section
+--
+operations
+
+public Division : set of char ==> Division
+Division(n) == (
+	name := n;
+	temperature := 25;
+	humidity := 0;
+	invasion := false;
+	return self;
+	);
+
+public addFireSensor: SensorType * int * AlarmControl ==> ()
+addFireSensor(s, temp, alarm) ==
+	sensors := sensors ++ { s |-> new FireSensor(s, temp, alarm) };
+
+public setTemp : int ==> ()
+setTemp(temp) == (
+	temperature := temp;
+	let sensor = sensors(<FIRESENSOR>) in
+		sensor.setValue(temp);
+	);
+	
+public getTemp : () ==> int
+getTemp() ==
+	return temperature;
 		
 end Division

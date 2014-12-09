@@ -2,5 +2,33 @@ class Utils
 
 types
 public Type = <FIRESENSOR> | <HUMIDSENSOR> | <INVASIONSENSOR>;
+public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
+public FireStatus = <IDLE> | <ALARM>;
+public WaterStatus = <IDLE> | <ALARM>;
+public Status = InvasionStatus | FireStatus | WaterStatus;
+public DivisionName = set of char;
+
+functions
+
+public init : Type -> Status
+init(type) ==
+		if type = <FIRESENSOR> then <IDLE>
+		else if type = <HUMIDSENSOR> then <IDLE>
+		else if type = <INVASIONSENSOR> then <OFF>
+		else <IDLE>;
+		
+public activateAlarm : Type -> Status
+activateAlarm(type) ==
+		if type = <FIRESENSOR> then <IDLE>
+		else if type = <HUMIDSENSOR> then <IDLE>
+		else if type = <INVASIONSENSOR> then <ON_IDLE>
+		else <IDLE>;
+		
+public desactivateAlarm : Type -> Status
+desactivateAlarm(type) ==
+		if type = <FIRESENSOR> then <IDLE>
+		else if type = <HUMIDSENSOR> then <IDLE>
+		else if type = <INVASIONSENSOR> then <OFF>
+		else <IDLE>;		
 		
 end Utils

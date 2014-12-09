@@ -1,64 +1,49 @@
 class AlarmControl
 
 		types
-				public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
-				public FireStatus = <IDLE> | <FIRE_ALARM>;
-				public WaterStatus = <IDLE> | <WATER_ALARM>;
-				/* public SensorName = Sensor`SensorName; */
+				public Type = Utils`Type;
 				public Password = seq of nat;
 				public Time = nat;
 							
         instance variables
-        		/*public sensors : set of Sensor;*/
-        		public invasionStatus : InvasionStatus := <OFF>;
-        		public fireStatus : FireStatus := <IDLE>;
-        		public waterStatus : WaterStatus := <IDLE>;
         		public timeStamp : nat := 0;   
-        		public password : Password := [];             
+        		public password : Password := [];
+        		public alarmchannels : map Utils`Type to AlarmChannel;             
                 
         operations
         		public AlarmControl: () ==> AlarmControl
-							AlarmControl() == 
+							AlarmControl() == (
+							alarmchannels := alarmchannels ++ { <FIRESENSOR> |-> new AlarmChannel(<FIRESENSOR>)};
+							alarmchannels := alarmchannels ++ { <HUMIDSENSOR> |-> new AlarmChannel(<HUMIDSENSOR>)};
+							alarmchannels := alarmchannels ++ { <INVASIONSENSOR> |-> new AlarmChannel(<INVASIONSENSOR>)};
 							return self;
+							);
         		
         		public setPassword : Password ==> ()
         		setPassword(code) ==
         			password := code;	
         		
+        		public setPassword : Password * Password ==> ()
+            	setPassword(newPass, oldPass) ==
+            		if oldPass = password then password := newPass;
+        		
         		public turnOn : Password  ==> ()
         		turnOn(pass) ==
-        				if pass = password then invasionStatus := <ON_IDLE>
-        		pre invasionStatus = <OFF>;
-		 
-            public setPassword : Password * Password ==> ()
-            setPassword(newPass, oldPass) ==
-            		if oldPass = password then password := newPass;
-               
-             public desativateAlarm : Password ==> ()
-             desativateAlarm(pass) ==
-             		if pass = password then invasionStatus := <OFF>
-             pre invasionStatus in set {<INTRUSION>, <ALARM>};
+        				if pass = password then alarmchannels(<INVASIONSENSOR>).activateAlarm(timeStamp)
+        		pre alarmchannels(<INVASIONSENSOR>).status = <OFF>;
+        		
+        		public desativateAlarm : Password ==> ()
+             		desativateAlarm(pass) ==
+             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm(timeStamp)
+             	pre alarmchannels(<INVASIONSENSOR>).status in set {<INTRUSION>, <ALARM>};
              
-             public turnOff : Password ==> ()
-             turnOff(pass) ==
-             		if pass = password then invasionStatus := <OFF>
-             pre invasionStatus = <ON_IDLE>;
-             
-             public setTime : Time ==> ()
-             setTime(time) ==
-             		if time > timeStamp then timeStamp := time;
-             		
-             public receiveFireSignal : FireStatus ==> ()
-             receiveFireSignal(s) ==
-             fireStatus := s;
-             
-             public receiveWaterSignal : WaterStatus ==> ()
-             receiveWaterSignal(s) ==
-             waterStatus := s;
-             
-             public receiveInvasionSignal : InvasionStatus ==> ()
-             receiveInvasionSignal(s) ==
-             invasionStatus := s;
-             		
+             	public turnOff : Password ==> ()
+             	turnOff(pass) ==
+             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm(timeStamp)
+             	pre alarmchannels(<INVASIONSENSOR>).status = <ON_IDLE>;
+        		            
+	             public setTime : Time ==> ()
+	             setTime(time) ==
+	             		if time > timeStamp then timeStamp := time;
              
 end AlarmControl

@@ -1,0 +1,31 @@
+class AlarmChannel
+
+instance variables
+
+public type : Utils`Type;
+public time : nat;
+public status : Utils`Status;
+
+operations
+
+public AlarmChannel: Utils`Type ==> AlarmChannel
+	AlarmChannel(alarmType) == (
+		type := alarmType;
+		time := 0;
+		status := Utils`init(type);
+		return self;
+		);		
+
+public activateAlarm : nat ==> ()
+	activateAlarm(t) == (
+		time := t;
+		status := Utils`activateAlarm(type);
+		);
+
+public desactivateAlarm : nat ==> ()
+	desactivateAlarm(t) == (
+		time := t;
+		status := Utils`desactivateAlarm(type);
+		);
+	
+end AlarmChannel
