@@ -5,6 +5,7 @@ instance variables
 public type : Utils`Type;
 public time : nat;
 public status : Utils`Status;
+public sensorFlag : bool;
 
 operations
 
@@ -13,19 +14,24 @@ public AlarmChannel: Utils`Type ==> AlarmChannel
 		type := alarmType;
 		time := 0;
 		status := Utils`init(type);
+		sensorFlag := false;
 		return self;
 		);		
 
-public activateAlarm : nat ==> ()
-	activateAlarm(t) == (
-		time := t;
+public activateAlarm : () ==> ()
+	activateAlarm() == (
 		status := Utils`activateAlarm(type);
 		);
 
-public desactivateAlarm : nat ==> ()
-	desactivateAlarm(t) == (
-		time := t;
+public desactivateAlarm : () ==> ()
+	desactivateAlarm() == (
 		status := Utils`desactivateAlarm(type);
 		);
-	
+
+public signal : nat ==> ()
+	signal(t) == (
+		time := t;
+		sensorFlag := true;
+		);
+
 end AlarmChannel

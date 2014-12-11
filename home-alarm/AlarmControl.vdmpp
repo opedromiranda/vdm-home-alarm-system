@@ -29,21 +29,25 @@ class AlarmControl
         		
         		public turnOn : Password  ==> ()
         		turnOn(pass) ==
-        				if pass = password then alarmchannels(<INVASIONSENSOR>).activateAlarm(timeStamp)
+        				if pass = password then alarmchannels(<INVASIONSENSOR>).activateAlarm()
         		pre alarmchannels(<INVASIONSENSOR>).status = <OFF>;
         		
         		public desativateAlarm : Password ==> ()
              		desativateAlarm(pass) ==
-             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm(timeStamp)
+             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm()
              	pre alarmchannels(<INVASIONSENSOR>).status in set {<INTRUSION>, <ALARM>};
              
              	public turnOff : Password ==> ()
              	turnOff(pass) ==
-             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm(timeStamp)
+             		if pass = password then alarmchannels(<INVASIONSENSOR>).desactivateAlarm()
              	pre alarmchannels(<INVASIONSENSOR>).status = <ON_IDLE>;
         		            
 	             public setTime : Time ==> ()
 	             setTime(time) ==
-	             		if time > timeStamp then timeStamp := time;
+	             	if time > timeStamp then timeStamp := time; -- do verification in alarmChannels
+	             		
+	             public activateAlarm : Utils`Type ==> ()
+	             activateAlarm(alarm) ==
+	             	alarmchannels(alarm).signal(timeStamp);
              
 end AlarmControl
