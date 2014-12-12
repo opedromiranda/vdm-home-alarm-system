@@ -3,7 +3,7 @@ class AlarmChannel
 instance variables
 
 public type : Utils`Type;
-public time : nat;
+public flagTime : nat;
 public status : Utils`Status;
 public sensorFlag : bool;
 
@@ -12,7 +12,7 @@ operations
 public AlarmChannel: Utils`Type ==> AlarmChannel
 	AlarmChannel(alarmType) == (
 		type := alarmType;
-		time := 0;
+		flagTime := 0;
 		status := Utils`init(type);
 		sensorFlag := false;
 		return self;
@@ -30,8 +30,14 @@ public desactivateAlarm : () ==> ()
 
 public signal : nat ==> ()
 	signal(t) == (
-		time := t;
+		flagTime := t;
 		sensorFlag := true;
 		);
+
+public updateAlarm : nat ==> ()
+	updateAlarm(t) == (
+		if t > flagTime + 5 then status := Utils`ringAlarm(type);
+	);
+
 
 end AlarmChannel

@@ -29,6 +29,14 @@ desactivateAlarm(type) ==
 		if type = <FIRESENSOR> then <IDLE>
 		else if type = <HUMIDSENSOR> then <IDLE>
 		else if type = <INVASIONSENSOR> then <OFF>
-		else <IDLE>;		
+		else <IDLE>;
+		
+public ringAlarm : Type -> Status
+ringAlarm(type) ==
+		if type = <FIRESENSOR> then <ALARM>
+		else if type = <HUMIDSENSOR> then <ALARM>
+		else if type = <INVASIONSENSOR> then <ALARM>
+		else <ALARM>;
+			
 		
 end Utils

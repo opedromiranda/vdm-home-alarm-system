@@ -43,9 +43,11 @@ class AlarmControl
              	pre alarmchannels(<INVASIONSENSOR>).status = <ON_IDLE>;
         		            
 	             public setTime : Time ==> ()
-	             setTime(time) ==
+	             setTime(time) == (
 	             	if time > timeStamp then timeStamp := time; -- do verification in alarmChannels
-	             		
+					alarmchannels(<FIRESENSOR>).updateAlarm(time);
+					);
+						             		
 	             public activateAlarm : Utils`Type ==> ()
 	             activateAlarm(alarm) ==
 	             	alarmchannels(alarm).signal(timeStamp);
