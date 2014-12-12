@@ -9,15 +9,16 @@ instance variables
 operations
 
 public FireSensor: Utils`Type * int * AlarmControl ==> FireSensor
-	FireSensor (t, val, a) == (
+	FireSensor (t, maxTemperature, a) == (
 		type := t;
-		value := val;
+		maxValue := maxTemperature;
 		alarm := a;
 		return self
 		);
 
 public setValue: nat ==> ()
-	setValue(v) ==
-		value := v;
+	setValue(v) == (
+		if v > maxValue then alarm.ringAlarm(type);
+	);
 
 end FireSensor

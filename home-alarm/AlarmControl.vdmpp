@@ -2,12 +2,12 @@ class AlarmControl
 
 		types
 				public Type = Utils`Type;
-				public Password = seq of nat;
+				public Password = nat;
 				public Time = nat;
 							
         instance variables
         		public timeStamp : nat := 0;   
-        		public password : Password := [];
+        		public password : Password := 0;
         		public alarmchannels : map Utils`Type to AlarmChannel;             
                 
         operations
@@ -52,4 +52,13 @@ class AlarmControl
 	             activateAlarm(alarm) ==
 	             	alarmchannels(alarm).signal(timeStamp);
              
+             	public ringAlarm : Utils`Type ==> ()
+	             ringAlarm(alarm) ==
+	             	alarmchannels(alarm).activateAlarm();
+	             	
+	             public getFireStatus : () ==> Utils`Status
+	             getFireStatus() ==
+	             	return alarmchannels(<FIRESENSOR>).status;
+	             	
+	             	
 end AlarmControl

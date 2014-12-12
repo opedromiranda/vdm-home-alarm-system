@@ -10,15 +10,16 @@ protected temperature	: int;
 protected humidity : nat;
 protected invasion : bool;
 public sensors: map SensorType to Sensor := { |-> };
-
+public alarmControl: AlarmControl;
 
 --
 -- Operations definition section
 --
 operations
 
-public Division : set of char ==> Division
-Division(n) == (
+public Division : seq of char * AlarmControl ==> Division
+Division(n, a) == (
+	alarmControl := a;
 	name := n;
 	temperature := 25;
 	humidity := 0;
@@ -26,15 +27,18 @@ Division(n) == (
 	return self;
 	);
 
-public addFireSensor: SensorType * int * AlarmControl ==> ()
-addFireSensor(s, temp, alarm) ==
-	sensors := sensors ++ { s |-> new FireSensor(s, temp, alarm) };
+public addFireSensor: int  ==> ()
+addFireSensor(maxTemperature) ==
+	sensors := sensors ++ { <FIRESENSOR> |-> new FireSensor(<FIRESENSOR>, maxTemperature, alarmControl) };
 
 public setTemp : int ==> ()
 setTemp(temp) == (
 	temperature := temp;
+	/*
 	let sensor = sensors(<FIRESENSOR>) in
 		sensor.setValue(temp);
+		*/
+	sensors(<FIRESENSOR>).setValue(temp);
 	);
 	
 public getTemp : () ==> int

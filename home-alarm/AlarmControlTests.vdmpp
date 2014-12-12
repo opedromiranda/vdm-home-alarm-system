@@ -1,42 +1,31 @@
 class AlarmControlTests
-
-operations
-
-	-- Simulates assertion checking by reducing it to pre-condition checking.
-	-- If 'arg' does not hold, a pre-condition violation will be signaled.
-	protected assertTrue: bool ==> ()
-	assertTrue(arg) == 
-		return 
-	pre arg;
-  
-	-- Simulates assertion checking by reducing it to post-condition checking.
-	-- If values are not equal, prints a message in the console and generates 
-	-- a post-conditions violation.
-	/*
-	protected assertEqual: ? * ? ==> ()
-	assertEqual(expected, actual) == 
-		if expected <> actual then (
-  		IO`print("Actual value (");
-  		IO`print(actual); 
-  		IO`print(") different from expected (");
-  		IO`print(expected);
-  		IO`println(")\n")
-		)
-	post expected = actual
-	
-	
-	
-	protected Test: () ==> ()
-	Test() ==
-		(AssertTrue(win.GetID() = 3);
-		AssertTrue(win.GetType() = <WINDOW>);
-
-		AssertTrue(therm.GetID() = 4);
-		AssertTrue(therm.GetType() = <THERMOSTAT>);
-		);
 		
+		instance variables
+            control : AlarmControl := new AlarmControl();
+            quarto : Division := new Division("quarto", control);
+                
+		operations
 		
-	*/
-  
+		private assertTrue: bool ==> ()
+                assertTrue(cond) == 
+                	return
+                pre cond;
+                
+        private testFireSensor : () ==> ()
+        	testFireSensor() == (
+        		IO`print("entrou");
+            	control.setPassword(1234);
+            	quarto.addFireSensor(30);
+            	quarto.setTemp(50);
+            	assertTrue(control.getFireStatus() = <ALARM>);  
+            );
+        		
+		
+        
+        public static main: () ==> ()
+            main() ==(
+	            new AlarmControlTests().testFireSensor();   
+            );
+			
 
 end AlarmControlTests

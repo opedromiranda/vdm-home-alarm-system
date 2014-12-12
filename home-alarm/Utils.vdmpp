@@ -6,7 +6,7 @@ public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
 public FireStatus = <IDLE> | <ALARM>;
 public WaterStatus = <IDLE> | <ALARM>;
 public Status = InvasionStatus | FireStatus | WaterStatus;
-public DivisionName = set of char;
+public DivisionName = seq of char;
 
 functions
 
@@ -19,8 +19,8 @@ init(type) ==
 		
 public activateAlarm : Type -> Status
 activateAlarm(type) ==
-		if type = <FIRESENSOR> then <IDLE>
-		else if type = <HUMIDSENSOR> then <IDLE>
+		if type = <FIRESENSOR> then <ALARM>
+		else if type = <HUMIDSENSOR> then <ALARM>
 		else if type = <INVASIONSENSOR> then <ON_IDLE>
 		else <IDLE>;
 		

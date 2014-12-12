@@ -7,7 +7,7 @@ public Type = Utils`Type
 instance variables
 
 protected type	: Type;
-protected value : int;
+protected maxValue : int;
 protected alarm : AlarmControl;
 
 --
