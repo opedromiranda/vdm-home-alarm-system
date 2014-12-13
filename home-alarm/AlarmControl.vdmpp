@@ -4,15 +4,18 @@ class AlarmControl
 				public Type = Utils`Type;
 				public Password = nat;
 				public Time = nat;
+				public AlarmChannels = map Utils`Type to AlarmChannel; 
 							
         instance variables
         		public timeStamp : nat := 0;   
         		public password : Password := 0;
-        		public alarmchannels : map Utils`Type to AlarmChannel;             
+        		public alarmchannels : AlarmChannels;         
                 
         operations
         		public AlarmControl: () ==> AlarmControl
-							AlarmControl() == (
+							AlarmControl() == (  
+							alarmchannels := { |-> };
+							--dcl alarmchannels : map Utils`Type to AlarmChannel;
 							alarmchannels := alarmchannels ++ { <FIRESENSOR> |-> new AlarmChannel(<FIRESENSOR>)};
 							alarmchannels := alarmchannels ++ { <HUMIDSENSOR> |-> new AlarmChannel(<HUMIDSENSOR>)};
 							alarmchannels := alarmchannels ++ { <INVASIONSENSOR> |-> new AlarmChannel(<INVASIONSENSOR>)};

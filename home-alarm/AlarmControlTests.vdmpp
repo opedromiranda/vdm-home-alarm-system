@@ -7,17 +7,19 @@ class AlarmControlTests
 		operations
 		
 		private assertTrue: bool ==> ()
-                assertTrue(cond) == 
+                assertTrue(cond) == (
+                	IO`print(cond);
                 	return
+                	)
                 pre cond;
                 
         private testFireSensor : () ==> ()
         	testFireSensor() == (
-        		IO`print("entrou");
             	control.setPassword(1234);
             	quarto.addFireSensor(30);
             	quarto.setTemp(50);
-            	assertTrue(control.getFireStatus() = <ALARM>);  
+            	assertTrue(control.getFireStatus() = <ALARM>); 
+            	IO`print("certo"); 
             );
         		
 		
