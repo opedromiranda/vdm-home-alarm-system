@@ -1,48 +1,65 @@
 class Division
 
-types
-public SensorType = Sensor`Type
-
 instance variables
 
 protected name	: Utils`DivisionName;
 protected temperature	: int;
 protected humidity : nat;
 protected invasion : bool;
-public sensors: map SensorType to Sensor := { |-> };
-public alarmControl: AlarmControl;
+public sensors: map Utils`Type to Sensor := { |-> };
 
---
--- Operations definition section
---
 operations
 
-public Division : seq of char * AlarmControl ==> Division
-Division(n, a) == (
-	alarmControl := a;
+public Division : seq of char ==> Division
+Division(n) == (
 	name := n;
 	temperature := 25;
-	humidity := 0;
+	humidity := 10;
 	invasion := false;
-	return self;
+	return self
 	);
 
-public addFireSensor: int  ==> ()
-addFireSensor(maxTemperature) ==
+public addFireSensor: int * AlarmControl  ==> ()
+addFireSensor(maxTemperature, alarmControl) ==
 	sensors := sensors ++ { <FIRESENSOR> |-> new FireSensor(<FIRESENSOR>, maxTemperature, alarmControl) };
+	
+public addHumidSensor: int * AlarmControl  ==> ()
+addHumidSensor(maxHumid, alarmControl) ==
+	sensors := sensors ++ { <HUMIDSENSOR> |-> new HumidSensor(<HUMIDSENSOR>, maxHumid, alarmControl) };
+	
+public addInvasionSensor: AlarmControl  ==> ()
+addInvasionSensor(alarmControl) ==
+	sensors := sensors ++ { <INVASIONSENSOR> |-> new InvasionSensor(<INVASIONSENSOR>, alarmControl) };
 
 public setTemp : int ==> ()
 setTemp(temp) == (
 	temperature := temp;
-	/*
-	let sensor = sensors(<FIRESENSOR>) in
-		sensor.setValue(temp);
-		*/
 	sensors(<FIRESENSOR>).setValue(temp);
 	);
+
+public setHumidity : nat ==> ()
+setHumidity(humid) == (
+	humidity := humid;
+	sensors(<HUMIDSENSOR>).setValue(humid);
+	);
 	
+	
+public setInvasion : bool ==> ()
+setInvasion(inva) == (
+	invasion := inva;
+	sensors(<INVASIONSENSOR>).setValue(inva);
+	);
+
 public getTemp : () ==> int
 getTemp() ==
 	return temperature;
+	
+public getHumid : () ==> nat
+getHumid() ==
+	return humidity;
+	
+public getInvasion : () ==> bool
+getInvasion() ==
+	return invasion;
 		
 end Division

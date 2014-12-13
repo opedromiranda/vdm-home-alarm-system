@@ -3,40 +3,40 @@ class Utils
 types
 public Type = <FIRESENSOR> | <HUMIDSENSOR> | <INVASIONSENSOR>;
 public InvasionStatus = <OFF> | <ON_IDLE> | <ALARM> | <INTRUSION>;
-public FireStatus = <IDLE> | <ALARM>;
-public WaterStatus = <IDLE> | <ALARM>;
+public FireStatus = <OFF> | <IDLE> | <ALARM>;
+public WaterStatus = <OFF> | <IDLE> | <ALARM>;
 public Status = InvasionStatus | FireStatus | WaterStatus;
 public DivisionName = seq of char;
+public Password = nat;
+public Time = nat;
+public AlarmStatus = <ON> | <OFF>;
 
 functions
-
-public init : Type -> Status
-init(type) ==
-		if type = <FIRESENSOR> then <IDLE>
-		else if type = <HUMIDSENSOR> then <IDLE>
-		else if type = <INVASIONSENSOR> then <OFF>
-		else <IDLE>;
 		
+public turnOn : Type -> Status
+turnOn(type) ==
+		if type = <FIRESENSOR> then <IDLE>
+		elseif type = <HUMIDSENSOR> then <IDLE>
+		else <ON_IDLE>;
+		
+public turnOff : () -> Status
+turnOff() ==
+		<OFF>;
+
 public activateAlarm : Type -> Status
 activateAlarm(type) ==
 		if type = <FIRESENSOR> then <ALARM>
-		else if type = <HUMIDSENSOR> then <ALARM>
-		else if type = <INVASIONSENSOR> then <ON_IDLE>
-		else <IDLE>;
-		
+		elseif type = <HUMIDSENSOR> then <ALARM>
+		else <INTRUSION>;
+
 public desactivateAlarm : Type -> Status
 desactivateAlarm(type) ==
 		if type = <FIRESENSOR> then <IDLE>
-		else if type = <HUMIDSENSOR> then <IDLE>
-		else if type = <INVASIONSENSOR> then <OFF>
-		else <IDLE>;
-		
-public ringAlarm : Type -> Status
-ringAlarm(type) ==
-		if type = <FIRESENSOR> then <ALARM>
-		else if type = <HUMIDSENSOR> then <ALARM>
-		else if type = <INVASIONSENSOR> then <ALARM>
-		else <ALARM>;
-			
-		
+		elseif type = <HUMIDSENSOR> then <IDLE>
+		else <OFF>;
+	
+public ringAlarm : () -> Status
+ringAlarm() ==
+		<ALARM>;
+
 end Utils

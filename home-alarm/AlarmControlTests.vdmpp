@@ -1,32 +1,50 @@
 class AlarmControlTests
 		
 		instance variables
-            control : AlarmControl := new AlarmControl();
-            quarto : Division := new Division("quarto", control);
+            control : AlarmControl := new AlarmControl(1234);
+            quarto : Division := new Division("quarto");
                 
 		operations
 		
 		private assertTrue: bool ==> ()
                 assertTrue(cond) == (
-                	IO`print(cond);
+                	IO`print("Check"); 
                 	return
                 	)
                 pre cond;
                 
         private testFireSensor : () ==> ()
         	testFireSensor() == (
-            	control.setPassword(1234);
-            	quarto.addFireSensor(30);
+        		IO`print("Testing temperature alarm \n");
+        		control.turnOn(1234);
+            	quarto.addFireSensor(30, control);
             	quarto.setTemp(50);
-            	assertTrue(control.getFireStatus() = <ALARM>); 
-            	IO`print("certo"); 
+            	assertTrue(control.getFireAlarmStatus() = <ALARM>);
             );
-        		
+            
+        private testHumidSensor : () ==> ()
+        	testHumidSensor() == (
+        		IO`print("Testing humidity alarm \n");
+        		control.turnOn(1234);
+            	quarto.addHumidSensor(90, control);
+            	quarto.setHumidity(99);
+            	assertTrue(control.getHumidAlarmStatus() = <ALARM>);
+            );
+        
+         private testInvasionSensor : () ==> ()
+        	testInvasionSensor() == (
+        		IO`print("Testing invasion alarm \n");
+        		control.turnOn(1234);
+            	quarto.addInvasionSensor(control);
+            	quarto.setInvasion(true);
+            	control.setTime(4);
+            	assertTrue(control.getInvasionAlarmStatus() = <INTRUSION>);
+            );
 		
         
         public static main: () ==> ()
             main() ==(
-	            new AlarmControlTests().testFireSensor();   
+	            new AlarmControlTests().testInvasionSensor();   
             );
 			
 

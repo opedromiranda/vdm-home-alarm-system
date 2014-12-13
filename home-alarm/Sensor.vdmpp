@@ -1,27 +1,20 @@
 
 class Sensor
 
-types
-public Type = Utils`Type
-
 instance variables
 
-protected type	: Type;
-protected maxValue : int;
+protected type	: Utils`Type;
 protected alarm : AlarmControl;
 
---
--- Operations definition section
---
 operations
 
-public GetType: () ==> Utils`Type
-	GetType() ==
-		return type;
 		
-		
-public setValue: nat ==> ()
+public setValue: int ==> ()
 	setValue(v) ==
-		is subclass responsibility
+		is subclass responsibility;
 		
+public setValue: bool ==> ()
+	setValue(v) ==
+		is subclass responsibility;
+			
 end Sensor

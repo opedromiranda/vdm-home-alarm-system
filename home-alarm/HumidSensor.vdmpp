@@ -1,0 +1,22 @@
+class HumidSensor is subclass of Sensor
+
+instance variables
+
+protected maxHumid : int ;
+
+operations
+
+public HumidSensor: Utils`Type * int * AlarmControl ==> HumidSensor
+	HumidSensor (t, maxHumidity, a) == (
+		type := t;
+		maxHumid := maxHumidity;
+		alarm := a;
+		return self
+		);
+
+public setValue: int ==> ()
+	setValue(v) == (
+		if v > maxHumid then alarm.activateAlarm(type);
+	);
+
+end HumidSensor

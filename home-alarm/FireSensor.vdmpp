@@ -1,24 +1,22 @@
 class FireSensor is subclass of Sensor
 
---
--- Operations definition section
---
-
 instance variables
+
+protected maxTemp : int ;
 
 operations
 
 public FireSensor: Utils`Type * int * AlarmControl ==> FireSensor
 	FireSensor (t, maxTemperature, a) == (
 		type := t;
-		maxValue := maxTemperature;
+		maxTemp := maxTemperature;
 		alarm := a;
 		return self
 		);
 
-public setValue: nat ==> ()
+public setValue: int ==> ()
 	setValue(v) == (
-		if v > maxValue then alarm.ringAlarm(type);
+		if v > maxTemp then alarm.activateAlarm(type);
 	);
 
 end FireSensor

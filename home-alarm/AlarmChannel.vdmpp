@@ -3,41 +3,49 @@ class AlarmChannel
 instance variables
 
 public type : Utils`Type;
-public flagTime : nat;
+public signalTime : nat;
 public status : Utils`Status;
-public sensorFlag : bool;
 
 operations
 
 public AlarmChannel: Utils`Type ==> AlarmChannel
 	AlarmChannel(alarmType) == (
 		type := alarmType;
-		flagTime := 0;
-		status := Utils`init(type);
-		sensorFlag := false;
+		signalTime := 0;
+		status := Utils`turnOff();
 		return self;
 		);		
 
-public activateAlarm : () ==> ()
-	activateAlarm() == (
-		status := Utils`activateAlarm(type);
-		);
+public turnOn : () ==> ()
+	turnOn() == 
+		status := Utils`turnOn(type);
+
+public turnOff : () ==> ()
+	turnOff() == 
+		status := Utils`turnOff();
+
+
+public activateAlarm : nat ==> ()
+	activateAlarm(time) == (
+			status := Utils`activateAlarm(type);
+			signalTime := time
+			);
 
 public desactivateAlarm : () ==> ()
 	desactivateAlarm() == (
-		status := Utils`desactivateAlarm(type);
-		);
-
-public signal : nat ==> ()
-	signal(t) == (
-		flagTime := t;
-		sensorFlag := true;
-		);
+			status := Utils`desactivateAlarm(type);
+			signalTime := 0
+			)
+	pre status in set {<ALARM>, <INTRUSION>};
 
 public updateAlarm : nat ==> ()
 	updateAlarm(t) == (
-		if t > flagTime + 5 then status := Utils`ringAlarm(type);
-	);
-
+		if t > signalTime + 20 then (
+					status := Utils`turnOn(type); -- alarm timeout
+					signalTime := 0
+					)
+		elseif 	t > signalTime + 5 then status := Utils`ringAlarm() 
+	)
+	pre status <> <OFF>
 
 end AlarmChannel

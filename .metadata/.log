@@ -4282,3 +4282,56 @@ Error 2159: Expecting '(' after new class name in 'DEFAULT' (console) at line 1:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:636)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:591)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1450)
+
+!ENTRY org.overture.ide.ui 4 0 2014-12-13 11:35:14.962
+!MESSAGE Faild to check marker attribute SEVERITY
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Marker id 5388 not found.
+	at org.eclipse.core.internal.resources.Marker.checkInfo(Marker.java:57)
+	at org.eclipse.core.internal.resources.Marker.getAttribute(Marker.java:98)
+	at org.overture.ide.ui.navigator.ProblemLabelDecorator.containsSeverity(ProblemLabelDecorator.java:92)
+	at org.overture.ide.ui.navigator.ProblemLabelDecorator.decorate(ProblemLabelDecorator.java:60)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:81)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:365)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:347)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:371)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:331)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+!SUBENTRY 1 org.eclipse.core.resources 4 376 2014-12-13 11:35:14.963
+!MESSAGE Marker id 5388 not found.
+
+!ENTRY org.overture.ide.ui 4 0 2014-12-13 11:35:14.963
+!MESSAGE Faild to check marker attribute SEVERITY
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Marker id 5388 not found.
+	at org.eclipse.core.internal.resources.Marker.checkInfo(Marker.java:57)
+	at org.eclipse.core.internal.resources.Marker.getAttribute(Marker.java:98)
+	at org.overture.ide.ui.navigator.ProblemLabelDecorator.containsSeverity(ProblemLabelDecorator.java:92)
+	at org.overture.ide.ui.navigator.ProblemLabelDecorator.decorate(ProblemLabelDecorator.java:64)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:269)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:81)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:365)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:347)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:371)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:331)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+!SUBENTRY 1 org.eclipse.core.resources 4 376 2014-12-13 11:35:14.963
+!MESSAGE Marker id 5388 not found.
+
+!ENTRY org.overture.ide.debug 4 0 2014-12-13 13:58:01.284
+!MESSAGE Cannot launch a project (home-alarm) with type errors, please check the problems view
+
+!ENTRY org.overture.ide.debug 4 0 2014-12-13 13:58:06.609
+!MESSAGE Cannot launch a project (home-alarm) with type errors, please check the problems view
+
+!ENTRY org.overture.ide.debug 4 0 2014-12-13 14:00:45.458
+!MESSAGE Cannot launch a project (home-alarm) with type errors, please check the problems view
+
+!ENTRY org.overture.ide.debug 4 0 2014-12-13 14:17:39.737
+!MESSAGE Cannot launch a project (home-alarm) with type errors, please check the problems view
+
+!ENTRY org.overture.ide.debug 4 0 2014-12-13 14:27:16.041
+!MESSAGE Cannot launch a project (home-alarm) with type errors, please check the problems view

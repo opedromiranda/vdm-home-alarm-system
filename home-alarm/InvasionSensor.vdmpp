@@ -1,0 +1,17 @@
+class InvasionSensor is subclass of Sensor
+
+operations
+
+public InvasionSensor: Utils`Type * AlarmControl ==> InvasionSensor
+	InvasionSensor (t, a) == (
+		type := t;
+		alarm := a;
+		return self
+		);
+ 
+public setValue: bool ==> ()
+	setValue(v) == (
+		if v then alarm.activateAlarm(type);
+	);
+
+end InvasionSensor
