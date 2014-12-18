@@ -40,11 +40,87 @@ class AlarmControlTests
             	control.setTime(4);
             	assertTrue(control.getInvasionAlarmStatus() = <INTRUSION>);
             );
+            
+		private testChangePassword : () ==> ()
+        	testChangePassword() == (
+        		IO`print("Testing change password \n");
+        		control.changePassword(4321,1234);
+            	assertTrue(control.password = 4321);
+            ); 
+       
+       private testTurnOn : () ==> ()
+        	testTurnOn() == (
+        		IO`print("Testing turn on alarm \n");
+        		control.turnOn(1234);
+            	assertTrue(control.status = <ON>);
+            );
+            
+            
+       private testHumidAlarmStatus : () ==> ()
+        	testHumidAlarmStatus() == (
+        		IO`print("Testing humid alarm status \n");
+        		control.turnOn(1234);
+        		assertTrue(control.getHumidAlarmStatus() = <IDLE>);
+            );
+            
+       private testInvasionAlarmStatus : () ==> ()
+        	testInvasionAlarmStatus() == (
+        		IO`print("Testing invasion alarm status \n");
+        		control.turnOn(1234);
+        		assertTrue(control.getInvasionAlarmStatus() = <ON_IDLE>);
+            );
+            
+       private testTurnOff : () ==> ()
+       	testTurnOff() == (
+       		IO`print("Testing turnOff alarm status \n");
+        	control.turnOn(1234);
+       		control.turnOff(1234);
+       		);
+       		
+       private testTimeOut : () ==> ()
+       	testTimeOut() == (
+       		IO`print("Testing time out alarm status \n");
+        	control.turnOn(1234);
+            quarto.addInvasionSensor(control);
+           	quarto.setInvasion(true);
+            control.setTime(21);
+            assertTrue(control.getInvasionAlarmStatus() = <ON_IDLE>);
+       		);
 		
-        
+		private testInvasionSensorRing : () ==> ()
+        	testInvasionSensorRing() == (
+        		IO`print("Testing invasion alarm ring \n");
+        		control.turnOn(1234);
+            	quarto.addInvasionSensor(control);
+            	quarto.setInvasion(true);
+            	control.setTime(6);
+            	assertTrue(control.getInvasionAlarmStatus() = <ALARM>);
+            );
+            
+         private testDesativateInvasionSensor : () ==> ()
+        	testDesativateInvasionSensor() == (
+        		IO`print("Testing desativate invasion alarm \n");
+        		control.turnOn(1234);
+            	quarto.addInvasionSensor(control);
+            	quarto.setInvasion(true);
+            	control.setTime(6);
+            	control.desativateAlarm(1234);
+            	assertTrue(control.getInvasionAlarmStatus() = <OFF>);
+            );            
+            
         public static main: () ==> ()
             main() ==(
-	            new AlarmControlTests().testInvasionSensor();   
+	            new AlarmControlTests().testInvasionAlarmStatus();   
+	            new AlarmControlTests().testHumidAlarmStatus(); 
+	            new AlarmControlTests().testFireSensor(); 
+	            new AlarmControlTests().testHumidSensor(); 
+	            new AlarmControlTests().testInvasionSensor(); 
+	            new AlarmControlTests().testChangePassword(); 
+	            new AlarmControlTests().testTurnOn(); 
+	            new AlarmControlTests().testTurnOff();
+	            new AlarmControlTests().testTimeOut(); 
+	            new AlarmControlTests().testInvasionSensorRing(); 
+	            new AlarmControlTests().testDesativateInvasionSensor(); 
             );
 			
 

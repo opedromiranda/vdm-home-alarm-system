@@ -19,6 +19,9 @@ Division(n) == (
 	return self
 	);
 
+/**
+* Add sensor to division
+*/
 public addFireSensor: int * AlarmControl  ==> ()
 addFireSensor(maxTemperature, alarmControl) ==
 	sensors := sensors ++ { <FIRESENSOR> |-> new FireSensor(<FIRESENSOR>, maxTemperature, alarmControl) };
@@ -31,6 +34,9 @@ public addInvasionSensor: AlarmControl  ==> ()
 addInvasionSensor(alarmControl) ==
 	sensors := sensors ++ { <INVASIONSENSOR> |-> new InvasionSensor(<INVASIONSENSOR>, alarmControl) };
 
+/**
+* Define each ambient values
+*/
 public setTemp : int ==> ()
 setTemp(temp) == (
 	temperature := temp;
@@ -50,16 +56,5 @@ setInvasion(inva) == (
 	sensors(<INVASIONSENSOR>).setValue(inva);
 	);
 
-public getTemp : () ==> int
-getTemp() ==
-	return temperature;
-	
-public getHumid : () ==> nat
-getHumid() ==
-	return humidity;
-	
-public getInvasion : () ==> bool
-getInvasion() ==
-	return invasion;
 		
 end Division

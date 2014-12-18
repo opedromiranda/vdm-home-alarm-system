@@ -16,21 +16,32 @@ public AlarmChannel: Utils`Type ==> AlarmChannel
 		return self;
 		);		
 
+/**
+* Turn On Alarm
+*/
 public turnOn : () ==> ()
 	turnOn() == 
 		status := Utils`turnOn(type);
 
+/**
+* Turn Off Alarm
+*/
 public turnOff : () ==> ()
 	turnOff() == 
 		status := Utils`turnOff();
 
-
+/**
+* Activate alarm and register the timestamp
+*/
 public activateAlarm : nat ==> ()
 	activateAlarm(time) == (
 			status := Utils`activateAlarm(type);
 			signalTime := time
 			);
 
+/**
+* Deactivate alarm and put timeStamp null
+*/
 public desactivateAlarm : () ==> ()
 	desactivateAlarm() == (
 			status := Utils`desactivateAlarm(type);
@@ -38,10 +49,13 @@ public desactivateAlarm : () ==> ()
 			)
 	pre status in set {<ALARM>, <INTRUSION>};
 
+/**
+* Update alarm status after each update time
+*/
 public updateAlarm : nat ==> ()
 	updateAlarm(t) == (
 		if t > signalTime + 20 then (
-					status := Utils`turnOn(type); -- alarm timeout
+					status := Utils`turnOn(type);
 					signalTime := 0
 					)
 		elseif 	t > signalTime + 5 then status := Utils`ringAlarm() 

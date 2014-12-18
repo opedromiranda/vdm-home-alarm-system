@@ -1,107 +1,103 @@
 class AlarmControl
 							
-        instance variables
-        		public timeStamp : nat;   
-        		public password : Utils`Password;
-        		public alarmchannels : map Utils`Type to AlarmChannel;
-        		public status : Utils`AlarmStatus;         
+instance variables
+public timeStamp : nat;   
+public password : Utils`Password;
+public alarmchannels : map Utils`Type to AlarmChannel;
+public status : Utils`AlarmStatus;         
                 
-        operations
-        		public AlarmControl: Utils`Password ==> AlarmControl
-							AlarmControl(pass) == (  
-							alarmchannels := { |-> };
-							password := pass;
-							timeStamp := 0;
-							status := <OFF>;
-							--dcl alarmchannels : map Utils`Type to AlarmChannel;
-							alarmchannels := alarmchannels ++ { <FIRESENSOR> |-> new AlarmChannel(<FIRESENSOR>)};
-							alarmchannels := alarmchannels ++ { <HUMIDSENSOR> |-> new AlarmChannel(<HUMIDSENSOR>)};
-							alarmchannels := alarmchannels ++ { <INVASIONSENSOR> |-> new AlarmChannel(<INVASIONSENSOR>)};
-							return self;
-							);	
+operations
+
+public AlarmControl: Utils`Password ==> AlarmControl
+	AlarmControl(pass) == (  
+		alarmchannels := { |-> };
+		password := pass;
+		timeStamp := 0;
+		status := <OFF>;
+		alarmchannels := alarmchannels ++ { <FIRESENSOR> |-> new AlarmChannel(<FIRESENSOR>)};
+		alarmchannels := alarmchannels ++ { <HUMIDSENSOR> |-> new AlarmChannel(<HUMIDSENSOR>)};
+		alarmchannels := alarmchannels ++ { <INVASIONSENSOR> |-> new AlarmChannel(<INVASIONSENSOR>)};
+		return self;
+		);	
         		
-        		public changePassword : Utils`Password * Utils`Password ==> ()
-            	changePassword(newPass, oldPass) ==
-            		password := newPass
-            	pre status = <OFF> and
-            		oldPass = password;
+public changePassword : Utils`Password * Utils`Password ==> ()
+	changePassword(newPass, oldPass) ==
+    	password := newPass
+   		pre status = <OFF> and oldPass = password;
         		
-        		/**
-				* Turn on Alarm that change status to iddle by user
-				*/
-        		public turnOn : Utils`Password ==> ()
-        		turnOn(pass) == (
-        			alarmchannels(<INVASIONSENSOR>).turnOn();
-        			alarmchannels(<FIRESENSOR>).turnOn();
-        			alarmchannels(<HUMIDSENSOR>).turnOn();
-        			status := <ON>
-        			)
-        		pre status = <OFF> and
-        			pass = password;
-        		
-        		
-        		/**
-				* Turn off all Alarms by user
-				*/
-        		public turnOff : Utils`Password ==> ()
-             	turnOff(pass) == (
-             		alarmchannels(<INVASIONSENSOR>).turnOff();
-             		alarmchannels(<FIRESENSOR>).turnOff();
-             		alarmchannels(<HUMIDSENSOR>).turnOff();
-        			status := <OFF>
-        			)
-             	pre status = <ON> and
-             		pass = password;
-             	
-             	
-             	/**
-				* Set timeStamp of alarmChannels 
-				*/
-             	public setTime : nat ==> ()
-	            setTime(time) == (
-	             	timeStamp := time;
-					alarmchannels(<FIRESENSOR>).updateAlarm(time);
-					alarmchannels(<HUMIDSENSOR>).updateAlarm(time);
-					alarmchannels(<INVASIONSENSOR>).updateAlarm(time);
-					)
-				pre time > timeStamp;
-				
-				
-				
-				/**
-				* Desativate Alarm when alarm is ringing | intrusion by user
-				*/
-        		public desativateAlarm : Utils`Password ==> ()			
-             		desativateAlarm(pass) == (
-             		alarmchannels(<FIRESENSOR>).desactivateAlarm();
-             		alarmchannels(<HUMIDSENSOR>).desactivateAlarm();
-             		alarmchannels(<INVASIONSENSOR>).desactivateAlarm()
-             		)
-             	pre pass = password;
-        		    
-        		    
-        		/**
-				* Put alarm on intrusion | alarm state by sensors
-				*/        
-	            public activateAlarm : Utils`Type ==> ()
-	            	activateAlarm(alarm) ==
-	             	alarmchannels(alarm).activateAlarm(timeStamp);
-             
-             
-             	/**
-				* Return status of different alarms sensors
-				*/
-	             public getFireAlarmStatus : () ==> Utils`Status
-	             getFireAlarmStatus() ==
-	             	return alarmchannels(<FIRESENSOR>).status;
-	             	
-	             public getHumidAlarmStatus : () ==> Utils`Status
-	             getHumidAlarmStatus() ==
-	             	return alarmchannels(<HUMIDSENSOR>).status;
-	             	
-	             public getInvasionAlarmStatus : () ==> Utils`Status
-	             getInvasionAlarmStatus() ==
-	             	return alarmchannels(<INVASIONSENSOR>).status;
-	             	
+/**
+* Turn on Alarm that change status to iddle by user
+*/
+public turnOn : Utils`Password ==> ()
+    turnOn(pass) == (
+    	alarmchannels(<INVASIONSENSOR>).turnOn();
+        alarmchannels(<FIRESENSOR>).turnOn();
+        alarmchannels(<HUMIDSENSOR>).turnOn();
+        status := <ON>
+        )
+        pre status = <OFF> and pass = password;
+      
+      
+/**
+* Turn off all Alarms by user
+*/
+public turnOff : Utils`Password ==> ()
+    turnOff(pass) == (
+    alarmchannels(<INVASIONSENSOR>).turnOff();
+    alarmchannels(<FIRESENSOR>).turnOff();
+    alarmchannels(<HUMIDSENSOR>).turnOff();
+   	status := <OFF>
+   	)
+    pre status = <ON> and pass = password;
+          
+          
+/**
+* Set timeStamp of alarmChannels 
+*/
+public setTime : nat ==> ()
+    setTime(time) == (
+    timeStamp := time;
+	alarmchannels(<FIRESENSOR>).updateAlarm(time);
+	alarmchannels(<HUMIDSENSOR>).updateAlarm(time);
+	alarmchannels(<INVASIONSENSOR>).updateAlarm(time);
+	)
+	pre time > timeStamp;
+
+
+
+/**
+* Desativate Alarm when alarm is ringing | intrusion by user
+*/
+public desativateAlarm : Utils`Password ==> ()			
+   	desativateAlarm(pass) == (
+   	alarmchannels(<FIRESENSOR>).desactivateAlarm();
+   	alarmchannels(<HUMIDSENSOR>).desactivateAlarm();
+   	alarmchannels(<INVASIONSENSOR>).desactivateAlarm()
+   	)
+    pre pass = password;
+          
+          
+/**
+* Put alarm on intrusion | alarm state by sensors
+*/        
+public activateAlarm : Utils`Type ==> ()
+   	activateAlarm(alarm) == alarmchannels(alarm).activateAlarm(timeStamp);
+         
+         
+/**
+* Return status of different alarms sensors
+*/
+public getFireAlarmStatus : () ==> Utils`Status
+    getFireAlarmStatus() ==
+        return alarmchannels(<FIRESENSOR>).status;
+	         	
+public getHumidAlarmStatus : () ==> Utils`Status
+	getHumidAlarmStatus() ==
+	    return alarmchannels(<HUMIDSENSOR>).status;
+	         	
+public getInvasionAlarmStatus : () ==> Utils`Status
+	getInvasionAlarmStatus() ==
+		return alarmchannels(<INVASIONSENSOR>).status;
+	         	
 	             	
 end AlarmControl

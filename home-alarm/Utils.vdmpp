@@ -13,6 +13,9 @@ public AlarmStatus = <ON> | <OFF>;
 
 functions
 		
+/**
+* Return alarm status for each type of sensor
+*/
 public turnOn : Type -> Status
 turnOn(type) ==
 		if type = <FIRESENSOR> then <IDLE>
